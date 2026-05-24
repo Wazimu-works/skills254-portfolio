@@ -28,7 +28,7 @@ export function CoursesSection() {
                   <p className="font-display text-3xl text-white">{course.price}</p>
                   <p className="mt-2 text-sm text-copy/60">{course.duration}</p>
                 </div>
-                <a href="#booking" className="text-sm text-turquoise transition hover:text-white">
+                <a href="/contact" className="text-sm text-turquoise transition hover:text-white">
                   Enroll interest
                 </a>
               </div>

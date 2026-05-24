@@ -1,55 +1,73 @@
-import { Suspense } from "react";
-import { SiteHeader } from "@/components/site-header";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { HeroSection } from "@/components/sections/hero";
-import { SkillsSection } from "@/components/sections/skills";
 import { MixtapesSection } from "@/components/sections/mixtapes";
 import { CoursesSection } from "@/components/sections/courses";
-import { PackagesSection } from "@/components/sections/packages";
-import { EventsSection } from "@/components/sections/events";
-import { BookingForm } from "@/components/booking-form";
-import { ContactForm } from "@/components/contact-form";
-import { PaymentCard } from "@/components/payment-card";
-import { SiteFooter } from "@/components/site-footer";
-import { SectionHeading } from "@/components/ui/section-heading";
+import { PageShell } from "@/components/page-shell";
+import { Button } from "@/components/ui/button";
+
+const featureLinks = [
+  {
+    title: "Sound",
+    href: "/sound",
+    copy: "Learn the mixing style, event curation approach, and signature energy behind the brand.",
+  },
+  {
+    title: "Packages",
+    href: "/packages",
+    copy: "Explore booking tiers, deposits, and event-fit options for clubs, weddings, and festivals.",
+  },
+  {
+    title: "Events",
+    href: "/events",
+    copy: "See the latest live appearances, venue profile, and upcoming city dates.",
+  },
+  {
+    title: "Contact",
+    href: "/contact",
+    copy: "Send booking details, direct inquiries, or trigger a payment-ready M-Pesa flow.",
+  },
+];
 
 export default function HomePage() {
   return (
-    <>
-      <SiteHeader />
-      <main className="relative overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(73,242,255,0.15),transparent_30%),radial-gradient(circle_at_80%_18%,rgba(255,79,168,0.12),transparent_18%),linear-gradient(rgba(73,242,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(73,242,255,0.05)_1px,transparent_1px)] bg-[size:auto,auto,72px_72px,72px_72px]" />
-        <HeroSection />
-        <SkillsSection />
-        <MixtapesSection />
-        <CoursesSection />
-        <PackagesSection />
-        <EventsSection />
+    <PageShell>
+      <HeroSection />
 
-        <section id="booking" className="py-24">
-          <div className="shell grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-            <div>
-              <SectionHeading
-                eyebrow="Bookings and Contact"
-                title="One polished surface for event leads, direct contact, and mobile payments."
-                description="The conversion layer is already shaped around secure API routes, Supabase inserts, and Daraja callbacks. Once your live credentials are added in Vercel, the payment flow can move from mock mode to production."
-              />
-              <div className="mt-8">
-                <Suspense>
-                  <BookingForm />
-                </Suspense>
-              </div>
+      <section className="py-24">
+        <div className="shell">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div className="max-w-2xl">
+              <p className="eyebrow">Explore The Brand</p>
+              <h2 className="section-title mt-3">Each major section now lives on its own dedicated page.</h2>
+              <p className="mt-4 text-sm leading-7 text-copy/75 sm:text-base">
+                The home page stays focused as the main landing experience, while detailed browsing flows move into individual routes for better clarity and scalability.
+              </p>
             </div>
-
-            <div className="space-y-6">
-              <PaymentCard />
-              <section id="contact">
-                <ContactForm />
-              </section>
-            </div>
+            <Button href="/contact">Start a booking</Button>
           </div>
-        </section>
-      </main>
-      <SiteFooter />
-    </>
+
+          <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            {featureLinks.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="glass rounded-[2rem] p-6 shadow-glow transition hover:-translate-y-1 hover:border-turquoise/25"
+              >
+                <h3 className="font-display text-2xl text-white">{item.title}</h3>
+                <p className="mt-4 text-sm leading-7 text-copy/70">{item.copy}</p>
+                <span className="mt-6 inline-flex items-center gap-2 text-sm text-turquoise">
+                  Open page
+                  <ArrowRight className="size-4" />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <MixtapesSection />
+      <CoursesSection />
+    </PageShell>
   );
 }

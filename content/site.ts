@@ -1,11 +1,11 @@
 export const navItems = [
-  { label: "Home", href: "#home" },
-  { label: "Sound", href: "#sound" },
-  { label: "Mixtapes", href: "#mixtapes" },
-  { label: "Courses", href: "#courses" },
-  { label: "Packages", href: "#packages" },
-  { label: "Events", href: "#events" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/" },
+  { label: "Sound", href: "/sound" },
+  { label: "Mixtapes", href: "/mixtapes" },
+  { label: "Courses", href: "/courses" },
+  { label: "Packages", href: "/packages" },
+  { label: "Events", href: "/events" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export const heroStats = [

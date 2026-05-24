@@ -24,12 +24,12 @@ export function HeroSection() {
           </p>
 
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-            <Button href="#booking">
+            <Button href="/contact">
               Reserve a date
               <ArrowRight className="ml-2 size-4" />
             </Button>
             <Button
-              href="#mixtapes"
+              href="/mixtapes"
               className="border-white/15 bg-white/5 shadow-none hover:bg-white/10"
             >
               Explore mixtapes

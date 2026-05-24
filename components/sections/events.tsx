@@ -32,7 +32,7 @@ export function EventsSection() {
                 </div>
               </div>
               <a
-                href="#contact"
+                href="/contact"
                 className="rounded-full border border-white/10 px-4 py-2 text-sm text-white transition hover:border-turquoise/35 hover:text-turquoise"
               >
                 Request invite

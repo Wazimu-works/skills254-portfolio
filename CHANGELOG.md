@@ -11,3 +11,4 @@
 - Rewrote the README to document architecture, setup, deployment, security, and payment flow.
 - Tightened TypeScript coverage for the Supabase SSR helper and excluded the legacy Vite mockup from the active Next.js build.
 - Verified the project with `npm run typecheck` and `npm run build`.
+- Split the former single-page portfolio sections into dedicated routes for Home, Sound, Mixtapes, Courses, Packages, Events, and Contact.

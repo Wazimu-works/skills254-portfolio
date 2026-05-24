@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, Radio } from "lucide-react";
 import { useState } from "react";
 import { navItems } from "@/content/site";
@@ -8,11 +10,12 @@ import { cn } from "@/lib/cn";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-base/60 backdrop-blur-2xl">
       <div className="shell flex h-20 items-center justify-between">
-        <a href="#home" className="flex items-center gap-3">
+        <Link href="/" className="flex items-center gap-3">
           <span className="rounded-full border border-turquoise/30 bg-turquoise/10 p-2 text-turquoise shadow-neon">
             <Radio className="size-4" />
           </span>
@@ -22,22 +25,25 @@ export function SiteHeader() {
               Future Club Portfolio
             </p>
           </div>
-        </a>
+        </Link>
 
         <nav className="hidden items-center gap-7 md:flex">
           {navItems.map((item) => (
-            <a
+            <Link
               key={item.href}
               href={item.href}
-              className="text-sm text-copy/70 transition hover:text-white"
+              className={cn(
+                "text-sm transition hover:text-white",
+                pathname === item.href ? "text-white" : "text-copy/70",
+              )}
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
         <div className="hidden md:block">
-          <Button href="#booking">Book The Vibe</Button>
+          <Button href="/contact">Book The Vibe</Button>
         </div>
 
         <button
@@ -52,14 +58,17 @@ export function SiteHeader() {
       <div className={cn("md:hidden", open ? "block" : "hidden")}>
         <div className="shell flex flex-col gap-4 pb-5">
           {navItems.map((item) => (
-            <a
+            <Link
               key={item.href}
               href={item.href}
-              className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-copy/80"
+              className={cn(
+                "rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm",
+                pathname === item.href ? "text-white" : "text-copy/80",
+              )}
               onClick={() => setOpen(false)}
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </div>
       </div>
