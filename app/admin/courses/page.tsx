@@ -1,12 +1,45 @@
 import { requireAdminUser } from "@/lib/admin-auth";
 import { getCoursesAdminData } from "@/lib/admin-data";
+import { adminCoursesCatalog, djSoftwareCatalog } from "@/content/admin-config";
 
 export default async function AdminCoursesPage() {
   await requireAdminUser();
   const { data } = await getCoursesAdminData();
 
   return (
-    <div className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
+    <div className="space-y-6">
+      <section className="glass rounded-[1.75rem] p-6 shadow-glow">
+        <h2 className="font-display text-2xl text-white">Specific courses being offered</h2>
+        <div className="mt-6 grid gap-4 xl:grid-cols-2">
+          {adminCoursesCatalog.map(([title, price, summary]) => (
+            <article key={title} className="rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
+              <div className="flex items-start justify-between gap-4">
+                <h3 className="font-display text-xl text-white">{title}</h3>
+                <span className="rounded-full border border-turquoise/20 bg-turquoise/10 px-3 py-1 text-sm text-turquoise">
+                  {price}
+                </span>
+              </div>
+              <p className="mt-3 text-sm leading-7 text-copy/70">{summary}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="glass rounded-[1.75rem] p-6 shadow-glow">
+        <h2 className="font-display text-2xl text-white">Software training and tutorial uploads</h2>
+        <p className="mt-3 text-sm leading-7 text-copy/70">
+          These are the DJ and production softwares you can teach, with the tutorial uploads mapped to the course file and module media paths in Supabase.
+        </p>
+        <div className="mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+          {djSoftwareCatalog.map((software) => (
+            <div key={software} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm text-white">
+              {software}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
       <section className="glass rounded-[1.75rem] p-6 shadow-glow">
         <h2 className="font-display text-2xl text-white">Course catalog</h2>
         <div className="mt-6 space-y-4">
@@ -66,6 +99,7 @@ export default async function AdminCoursesPage() {
           </div>
         </div>
       </section>
+      </div>
     </div>
   );
 }

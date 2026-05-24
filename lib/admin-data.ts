@@ -137,7 +137,7 @@ export async function getPaymentsAdminData() {
 
   const { data, error } = await supabase
     .from("payments")
-    .select("id,status,receipt_number,merchant_request_id,checkout_request_id,phone,payment_type,description,amount,paid_amount,created_at")
+    .select("id,status,receipt_number,merchant_request_id,checkout_request_id,phone,payment_type,description,amount,paid_amount,created_at,booking:bookings(full_name),course:courses(title),mixtape:mixtapes(title)")
     .order("created_at", { ascending: false });
 
   return fallback(data ?? [], error);

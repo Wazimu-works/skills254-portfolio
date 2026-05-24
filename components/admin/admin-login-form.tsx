@@ -2,11 +2,13 @@
 
 import type { FormEvent } from "react";
 import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 
 export function AdminLoginForm({ next }: { next?: string }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
@@ -52,13 +54,23 @@ export function AdminLoginForm({ next }: { next?: string }) {
         </label>
         <label className="space-y-2 text-sm text-copy/75">
           <span>Password</span>
-          <input
-            type="password"
-            required
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            className="w-full rounded-2xl border border-white/10 bg-base-soft/70 px-4 py-3 text-white outline-none transition focus:border-turquoise/50"
-          />
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              required
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              className="w-full rounded-2xl border border-white/10 bg-base-soft/70 px-4 py-3 pr-12 text-white outline-none transition focus:border-turquoise/50"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((current) => !current)}
+              className="absolute right-3 top-1/2 inline-flex size-9 -translate-y-1/2 items-center justify-center rounded-full text-copy/60 transition hover:bg-white/5 hover:text-white"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+            </button>
+          </div>
         </label>
       </div>
       <button

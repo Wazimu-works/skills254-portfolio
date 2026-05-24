@@ -14,3 +14,6 @@
 - Split the former single-page portfolio sections into dedicated routes for Home, Sound, Mixtapes, Courses, Packages, and Contact.
 - Rebuilt the admin area into a Supabase-authenticated multi-page control center with dashboard, mixtapes, courses, bookings, pricing, payments, content, media, analytics, and customization sections.
 - Removed public and admin event surfaces from the site structure.
+- Expanded admin customization controls for theme palettes, homepage banners, featured mixtapes, featured courses, and hero media settings.
+- Added richer media/admin catalog views for thumbnails, broader audio/video formats, DJ asset collections, detailed course offerings, exact package ladders, and genre-ordered mixtape browsing.
+- Extended the payments view with total received, payout placeholder totals, and related client/source names.

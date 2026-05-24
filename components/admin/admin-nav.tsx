@@ -10,6 +10,7 @@ import {
   LayoutTemplate,
   LibraryBig,
   Palette,
+  FolderKanban,
   Settings2,
   Ticket,
   WalletCards,
@@ -25,6 +26,7 @@ const adminLinks = [
   { href: "/admin/payments", label: "Payments", icon: Settings2 },
   { href: "/admin/content", label: "Content", icon: LayoutTemplate },
   { href: "/admin/media", label: "Media", icon: LibraryBig },
+  { href: "/admin/dj-assets", label: "DJ Assets", icon: FolderKanban },
   { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
   { href: "/admin/customization", label: "Customization", icon: Palette },
 ];

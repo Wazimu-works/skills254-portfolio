@@ -35,26 +35,55 @@ export const skills = [
 
 export const mixtapes = [
   {
-    title: "Amapiano Afterglow Vol. 04",
-    genre: "Amapiano / Afro House",
+    title: "Ohanglah Vibe Session Vol. 01",
+    genre: "OHANGLAH",
     duration: "58 min",
     link: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     image: "/images/mixtape-decks.png",
   },
   {
-    title: "Neon Transit Nairobi",
-    genre: "Afrobeats / Gengetone",
+    title: "Rhumba Select Classics",
+    genre: "RHUMBA",
     duration: "47 min",
     link: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     image: "/images/mixtape-console.png",
   },
   {
-    title: "Midnight Soft Voltage",
-    genre: "R&B / Lounge / Chill",
+    title: "Bongo x Lingala Heatwave",
+    genre: "BONGO",
     duration: "41 min",
     link: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     image:
       "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    title: "Lingala Groove Transmission",
+    genre: "LINGALA",
+    duration: "52 min",
+    link: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    image: "/images/mixtape-decks.png",
+  },
+  {
+    title: "Afrobeat Motion Control",
+    genre: "AFROBEAT",
+    duration: "56 min",
+    link: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    image: "/images/mixtape-console.png",
+  },
+  {
+    title: "Kompa Midnight Cruise",
+    genre: "KOMPA MUSIC",
+    duration: "49 min",
+    link: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    image:
+      "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    title: "Reggea Night Dub Pressure",
+    genre: "REGGEA",
+    duration: "45 min",
+    link: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    image: "/images/mixtape-decks.png",
   },
 ];
 

@@ -1,5 +1,6 @@
 import { requireAdminUser } from "@/lib/admin-auth";
 import { getPricingAdminData } from "@/lib/admin-data";
+import { adminPricingCatalog } from "@/content/admin-config";
 
 export default async function AdminPricingPage() {
   await requireAdminUser();
@@ -44,25 +45,16 @@ export default async function AdminPricingPage() {
       </section>
 
       <section className="glass rounded-[1.75rem] p-6 shadow-glow">
-        <h2 className="font-display text-2xl text-white">Package editor</h2>
+        <h2 className="font-display text-2xl text-white">Official event package ladder</h2>
         <p className="mt-3 text-sm leading-7 text-copy/70">
-          Manage package names, pricing, features, and promos for Small Vibe, Club Vibe, Wedding Vibe, Full Night Vibe, and future offers.
+          Use this as the current live pricing reference while editing records and promos.
         </p>
-        <div className="mt-6 grid gap-4">
-          {["Package name", "Base price", "Deposit", "Feature list (comma separated)", "Promo text", "Discount percentage"].map((label) => (
-            <label key={label} className="space-y-2 text-sm text-copy/75">
-              <span>{label}</span>
-              <input className="w-full rounded-2xl border border-white/10 bg-base-soft/70 px-4 py-3 text-white outline-none" />
-            </label>
+        <div className="mt-6 space-y-3">
+          {adminPricingCatalog.map((item) => (
+            <div key={item} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm text-white">
+              {item}
+            </div>
           ))}
-          <div className="grid gap-3 sm:grid-cols-2">
-            {["Featured package", "Enable promo discount"].map((label) => (
-              <label key={label} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-copy/75">
-                <input type="checkbox" className="size-4 accent-cyan-400" />
-                {label}
-              </label>
-            ))}
-          </div>
         </div>
       </section>
     </div>
