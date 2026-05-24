@@ -17,7 +17,7 @@ Premium Next.js App Router portfolio for a professional DJ. The site is designed
 - Calm premium cyber-club visual direction instead of noisy “gaming” UI
 - Clean booking and contact conversion flows
 - Future-ready paths for paid courses, paid mixtapes, and booking deposits
-- Admin-only operational dashboard protected with HTTP basic auth
+- Admin workspace authenticated with Supabase Auth
 
 ## Main Routes
 
@@ -83,9 +83,6 @@ npm run dev
 - `MPESA_CONSUMER_KEY`
 - `MPESA_CONSUMER_SECRET`
 - `MPESA_CALLBACK_URL`
-- `ADMIN_BASIC_AUTH_USER`
-- `ADMIN_BASIC_AUTH_PASSWORD`
-
 ## Supabase
 
 The schema is in [supabase/schema.sql](/C:/Users/HP/OneDrive/Desktop/DEEJAY%20SKILLS%20254/supabase/schema.sql). It includes:
@@ -119,7 +116,7 @@ If Daraja credentials are missing, the STK route returns a mock-safe success pay
 ## Security Notes
 
 - No service role keys or Daraja secrets are exposed client-side.
-- `/admin` is protected by middleware-based HTTP basic auth.
+- `/admin` uses Supabase Auth sessions plus admin-role checks.
 - Form and payment routes have request validation and simple rate limiting.
 - Global security headers are defined in `next.config.ts`.
 - Heavy private media is intended for Supabase signed URL delivery.
@@ -148,6 +145,6 @@ https://your-domain.com/api/payments/callback
 ## Backend Expansion Ideas
 
 - Replace the in-memory rate limiter with Upstash Redis for multi-instance durability.
-- Add Supabase Auth for internal admin identity beyond basic auth.
+- Add richer admin permission tiers beyond the base admin check.
 - Add signed URL issuance for premium mixtapes and student files.
 - Add webhook signature verification if Safaricom callback verification requirements evolve.

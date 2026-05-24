@@ -11,4 +11,6 @@
 - Rewrote the README to document architecture, setup, deployment, security, and payment flow.
 - Tightened TypeScript coverage for the Supabase SSR helper and excluded the legacy Vite mockup from the active Next.js build.
 - Verified the project with `npm run typecheck` and `npm run build`.
-- Split the former single-page portfolio sections into dedicated routes for Home, Sound, Mixtapes, Courses, Packages, Events, and Contact.
+- Split the former single-page portfolio sections into dedicated routes for Home, Sound, Mixtapes, Courses, Packages, and Contact.
+- Rebuilt the admin area into a Supabase-authenticated multi-page control center with dashboard, mixtapes, courses, bookings, pricing, payments, content, media, analytics, and customization sections.
+- Removed public and admin event surfaces from the site structure.

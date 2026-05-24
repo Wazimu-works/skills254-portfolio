@@ -1,37 +1,68 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { createServerClient } from "@supabase/ssr";
 
-export function middleware(request: NextRequest) {
+const ADMIN_LOGIN_PATH = "/admin/login";
+
+export async function middleware(request: NextRequest) {
   if (!request.nextUrl.pathname.startsWith("/admin")) {
     return NextResponse.next();
   }
 
-  const adminUser = process.env.ADMIN_BASIC_AUTH_USER;
-  const adminPassword = process.env.ADMIN_BASIC_AUTH_PASSWORD;
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-  if (!adminUser || !adminPassword) {
-    return new NextResponse("Admin credentials are not configured.", { status: 503 });
+  if (!supabaseUrl || !supabaseAnonKey) {
+    return NextResponse.next();
   }
 
-  const authHeader = request.headers.get("authorization");
-  if (!authHeader?.startsWith("Basic ")) {
-    return new NextResponse("Authentication required.", {
-      status: 401,
-      headers: { "WWW-Authenticate": 'Basic realm="Admin Area"' },
-    });
+  let response = NextResponse.next({
+    request: {
+      headers: request.headers,
+    },
+  });
+
+  const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+    cookies: {
+      getAll() {
+        return request.cookies.getAll();
+      },
+      setAll(
+        cookiesToSet: Array<{
+          name: string;
+          value: string;
+          options?: Parameters<typeof response.cookies.set>[2];
+        }>,
+      ) {
+        cookiesToSet.forEach(({ name, value, options }) => {
+          request.cookies.set(name, value);
+          response.cookies.set(name, value, options);
+        });
+      },
+    },
+  });
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const isLoginPage = request.nextUrl.pathname === ADMIN_LOGIN_PATH;
+
+  if (!user && !isLoginPage) {
+    const loginUrl = request.nextUrl.clone();
+    loginUrl.pathname = ADMIN_LOGIN_PATH;
+    loginUrl.searchParams.set("next", request.nextUrl.pathname);
+    return NextResponse.redirect(loginUrl);
   }
 
-  const credentials = Buffer.from(authHeader.split(" ")[1], "base64").toString("utf8");
-  const [user, password] = credentials.split(":");
-
-  if (user !== adminUser || password !== adminPassword) {
-    return new NextResponse("Unauthorized.", {
-      status: 401,
-      headers: { "WWW-Authenticate": 'Basic realm="Admin Area"' },
-    });
+  if (user && isLoginPage) {
+    const adminUrl = request.nextUrl.clone();
+    adminUrl.pathname = "/admin";
+    adminUrl.search = "";
+    return NextResponse.redirect(adminUrl);
   }
 
-  return NextResponse.next();
+  return response;
 }
 
 export const config = {

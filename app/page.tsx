@@ -18,11 +18,6 @@ const featureLinks = [
     copy: "Explore booking tiers, deposits, and event-fit options for clubs, weddings, and festivals.",
   },
   {
-    title: "Events",
-    href: "/events",
-    copy: "See the latest live appearances, venue profile, and upcoming city dates.",
-  },
-  {
     title: "Contact",
     href: "/contact",
     copy: "Send booking details, direct inquiries, or trigger a payment-ready M-Pesa flow.",
@@ -47,7 +42,7 @@ export default function HomePage() {
             <Button href="/contact">Start a booking</Button>
           </div>
 
-          <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {featureLinks.map((item) => (
               <Link
                 key={item.href}

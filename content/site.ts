@@ -4,13 +4,12 @@ export const navItems = [
   { label: "Mixtapes", href: "/mixtapes" },
   { label: "Courses", href: "/courses" },
   { label: "Packages", href: "/packages" },
-  { label: "Events", href: "/events" },
   { label: "Contact", href: "/contact" },
 ];
 
 export const heroStats = [
   { label: "Years in the booth", value: "9+" },
-  { label: "Events energized", value: "220+" },
+  { label: "Crowds moved", value: "220+" },
   { label: "Students mentored", value: "1.9K" },
   { label: "Mixtape plays", value: "120K+" },
 ];
@@ -108,10 +107,4 @@ export const packages = [
     deposit: "KSh 50,000",
     details: "Festival-grade presence, extended performance flow, and advanced stage support.",
   },
-];
-
-export const events = [
-  { name: "Amapiano Red Eye", venue: "The Alchemist", date: "12 Jun 2026", city: "Nairobi" },
-  { name: "Street Culture Fest", venue: "KICC Grounds", date: "05 Jul 2026", city: "Nairobi" },
-  { name: "Sunset Reef Session", venue: "Reef Hotel", date: "22 Aug 2026", city: "Mombasa" },
 ];

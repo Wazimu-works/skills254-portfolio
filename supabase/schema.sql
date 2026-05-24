@@ -29,6 +29,13 @@ create table if not exists public.mixtapes (
   updated_at timestamptz not null default timezone('utc', now())
 );
 
+alter table public.mixtapes add column if not exists video_file_path text;
+alter table public.mixtapes add column if not exists thumbnail_path text;
+alter table public.mixtapes add column if not exists tags jsonb not null default '[]'::jsonb;
+alter table public.mixtapes add column if not exists is_featured boolean not null default false;
+alter table public.mixtapes add column if not exists is_trending boolean not null default false;
+alter table public.mixtapes add column if not exists play_count integer not null default 0;
+
 create table if not exists public.courses (
   id uuid primary key default gen_random_uuid(),
   title text not null,
@@ -44,6 +51,10 @@ create table if not exists public.courses (
   updated_at timestamptz not null default timezone('utc', now())
 );
 
+alter table public.courses add column if not exists is_premium boolean not null default false;
+alter table public.courses add column if not exists enrollments_count integer not null default 0;
+alter table public.courses add column if not exists downloadable_resources jsonb not null default '[]'::jsonb;
+
 create table if not exists public.pricing_packages (
   id uuid primary key default gen_random_uuid(),
   name text not null,
@@ -57,6 +68,10 @@ create table if not exists public.pricing_packages (
   created_at timestamptz not null default timezone('utc', now()),
   updated_at timestamptz not null default timezone('utc', now())
 );
+
+alter table public.pricing_packages add column if not exists discount_percentage integer not null default 0;
+alter table public.pricing_packages add column if not exists promo_text text;
+alter table public.pricing_packages add column if not exists is_discount_enabled boolean not null default false;
 
 create table if not exists public.bookings (
   id uuid primary key default gen_random_uuid(),
@@ -73,6 +88,14 @@ create table if not exists public.bookings (
   created_at timestamptz not null default timezone('utc', now()),
   updated_at timestamptz not null default timezone('utc', now())
 );
+
+alter table public.bookings add column if not exists deposit_required integer not null default 0;
+alter table public.bookings add column if not exists deposit_paid integer not null default 0;
+alter table public.bookings add column if not exists invoice_number text;
+alter table public.bookings add column if not exists client_whatsapp text;
+alter table public.bookings add column if not exists internal_notes text;
+alter table public.bookings drop constraint if exists bookings_status_check;
+alter table public.bookings add constraint bookings_status_check check (status in ('pending', 'confirmed', 'completed', 'cancelled'));
 
 create table if not exists public.payments (
   id uuid primary key default gen_random_uuid(),
@@ -105,6 +128,65 @@ create table if not exists public.contact_messages (
   created_at timestamptz not null default timezone('utc', now())
 );
 
+create table if not exists public.admin_users (
+  id uuid primary key references auth.users(id) on delete cascade,
+  full_name text,
+  role text not null default 'admin',
+  is_active boolean not null default true,
+  created_at timestamptz not null default timezone('utc', now())
+);
+
+create table if not exists public.course_modules (
+  id uuid primary key default gen_random_uuid(),
+  course_id uuid not null references public.courses(id) on delete cascade,
+  title text not null,
+  description text,
+  position integer not null default 1,
+  media_type text not null default 'video',
+  media_path text,
+  is_preview boolean not null default false,
+  downloadable_resource_paths jsonb not null default '[]'::jsonb,
+  created_at timestamptz not null default timezone('utc', now())
+);
+
+create table if not exists public.media_assets (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  bucket text not null,
+  file_path text not null,
+  kind text not null,
+  folder text,
+  tags jsonb not null default '[]'::jsonb,
+  size_bytes bigint,
+  created_at timestamptz not null default timezone('utc', now())
+);
+
+create table if not exists public.site_content (
+  id uuid primary key default gen_random_uuid(),
+  key text unique not null,
+  title text not null,
+  body text not null,
+  metadata jsonb,
+  updated_at timestamptz not null default timezone('utc', now())
+);
+
+create table if not exists public.site_settings (
+  id uuid primary key default gen_random_uuid(),
+  key text unique not null,
+  value jsonb not null,
+  updated_at timestamptz not null default timezone('utc', now())
+);
+
+create table if not exists public.analytics_snapshots (
+  id uuid primary key default gen_random_uuid(),
+  metric_key text not null,
+  metric_label text not null,
+  value_numeric numeric,
+  value_text text,
+  dimensions jsonb,
+  captured_at timestamptz not null default timezone('utc', now())
+);
+
 alter table public.profiles enable row level security;
 alter table public.mixtapes enable row level security;
 alter table public.courses enable row level security;
@@ -112,6 +194,12 @@ alter table public.pricing_packages enable row level security;
 alter table public.bookings enable row level security;
 alter table public.payments enable row level security;
 alter table public.contact_messages enable row level security;
+alter table public.admin_users enable row level security;
+alter table public.course_modules enable row level security;
+alter table public.media_assets enable row level security;
+alter table public.site_content enable row level security;
+alter table public.site_settings enable row level security;
+alter table public.analytics_snapshots enable row level security;
 
 create policy "Public can read profiles"
 on public.profiles for select
@@ -169,6 +257,36 @@ with check (auth.role() = 'service_role');
 
 create policy "Admins manage contact messages"
 on public.contact_messages for all
+using (auth.role() = 'service_role')
+with check (auth.role() = 'service_role');
+
+create policy "Admins manage admin users"
+on public.admin_users for all
+using (auth.role() = 'service_role')
+with check (auth.role() = 'service_role');
+
+create policy "Admins manage course modules"
+on public.course_modules for all
+using (auth.role() = 'service_role')
+with check (auth.role() = 'service_role');
+
+create policy "Admins manage media assets"
+on public.media_assets for all
+using (auth.role() = 'service_role')
+with check (auth.role() = 'service_role');
+
+create policy "Admins manage site content"
+on public.site_content for all
+using (auth.role() = 'service_role')
+with check (auth.role() = 'service_role');
+
+create policy "Admins manage site settings"
+on public.site_settings for all
+using (auth.role() = 'service_role')
+with check (auth.role() = 'service_role');
+
+create policy "Admins manage analytics snapshots"
+on public.analytics_snapshots for all
 using (auth.role() = 'service_role')
 with check (auth.role() = 'service_role');
 
